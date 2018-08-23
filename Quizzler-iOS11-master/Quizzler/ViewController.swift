@@ -83,11 +83,23 @@ class ViewController: UIViewController {
         {
             print("Game Over")
             questionLabel.text = "Game Over!\n Do you want to restart?"
+            let alert = UIAlertController(title: "Game OVer", message: "Game Over Do you want to restart?", preferredStyle: UIAlertControllerStyle.alert)
+            let alertAction = UIAlertAction(title: "Restart", style: .default) { UIAlertAction in
+                self.startOver()
+            }
+            
+            alert.addAction(alertAction)
+            
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     
     
-    func startOver() {
+    func startOver()
+    {
+        questionNumber = 0
+        
        
     }
     
