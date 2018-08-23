@@ -4,7 +4,8 @@
 //
 //  Created by Angela Yu on 25/08/2015.
 //  Copyright (c) 2015 London App Brewery. All rights reserved.
-//
+// 2018.0823
+
 
 import UIKit
 
@@ -12,6 +13,8 @@ class ViewController: UIViewController {
     
     //Place your instance variables here
     let Data = QuestionData()
+    var compareAnswer: Bool = false
+    var questionNumber: Int = 0
     
     
     
@@ -23,7 +26,7 @@ class ViewController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        questionLabel.text = Data.questionAllList[0].questionList
+        nextQuestion()
         
         
         
@@ -35,10 +38,14 @@ class ViewController: UIViewController {
         if sender.tag == 1
         {
             print("anser is true")
+            compareAnswer = true
+            checkAnswer()
             
         }else if sender.tag == 2
         {
             print("answer is false")
+            compareAnswer = false
+            checkAnswer()
         }
   
     }
@@ -49,13 +56,34 @@ class ViewController: UIViewController {
     }
     
 
-    func nextQuestion() {
+    func nextQuestion()
+    {
+       
+            questionLabel.text = Data.questionAllList[questionNumber].questionList
+            questionNumber = questionNumber + 1
         
     }
     
     
-    func checkAnswer() {
-        
+    func checkAnswer()
+    {
+        if questionNumber <= 12
+        {
+            if compareAnswer == Data.questionAllList[questionNumber].answer
+            {
+                print("Wonderful")
+                nextQuestion()
+            
+            }else
+            {
+                print("Worng!")
+                nextQuestion()
+            }
+        }else
+        {
+            print("Game Over")
+            questionLabel.text = "Game Over!\n Do you want to restart?"
+        }
     }
     
     
