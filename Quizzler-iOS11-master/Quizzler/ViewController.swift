@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     let Data = QuestionData()
     var compareAnswer: Bool = false
     var questionNumber: Int = 0
+    var score:Int = 0
     
     
     
@@ -28,8 +29,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         nextQuestion()
         
-        
-        
     }
 
 
@@ -39,19 +38,27 @@ class ViewController: UIViewController {
         {
             print("anser is true")
             compareAnswer = true
-            checkAnswer()
             
         }else if sender.tag == 2
         {
             print("answer is false")
             compareAnswer = false
-            checkAnswer()
         }
+        
+        checkAnswer()
   
     }
     
     
-    func updateUI() {
+    func updateUI()
+    {
+        progressLabel.text = String(questionNumber) + "/13"
+        
+        progressBar.frame.size.width = (view.frame.size.width/13) * CGFloat(questionNumber)
+        
+        scoreLabel.text = "Score: " + String(score)
+        
+        
       
     }
     
@@ -59,8 +66,11 @@ class ViewController: UIViewController {
     func nextQuestion()
     {
        
-            questionLabel.text = Data.questionAllList[questionNumber].questionList
-            questionNumber = questionNumber + 1
+        questionLabel.text = Data.questionAllList[questionNumber].questionList
+        
+        questionNumber = questionNumber + 1
+        
+        updateUI()
         
     }
     
@@ -72,18 +82,24 @@ class ViewController: UIViewController {
             if compareAnswer == Data.questionAllList[questionNumber].answer
             {
                 print("Wonderful")
+                
+                score = score + 1
+                
                 nextQuestion()
             
             }else
             {
                 print("Worng!")
+                
                 nextQuestion()
+                
             }
         }else
         {
             print("Game Over")
             questionLabel.text = "Game Over!\n Do you want to restart?"
             let alert = UIAlertController(title: "Game OVer", message: "Game Over Do you want to restart?", preferredStyle: UIAlertControllerStyle.alert)
+            
             let alertAction = UIAlertAction(title: "Restart", style: .default) { UIAlertAction in
                 self.startOver()
             }
@@ -100,9 +116,13 @@ class ViewController: UIViewController {
     {
         questionNumber = 0
         
+        score = 0
+        
+        updateUI()
+        
        
     }
     
 
     
-}
+}   // End of the class
